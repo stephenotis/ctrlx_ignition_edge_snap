@@ -1,0 +1,94 @@
+# Getting started
+# See https://snapcraft.io/docs/getting-started
+# Snapcraft references
+# See https://snapcraft.io/docs/snapcraft-yaml-reference
+name: ctrlx-ignition-edge
+version: "8.1.45"
+base: core22
+summary: Ignition Edge Gateway designed for ctrlX OS
+description: |
+    Ignition Edge® makes edge computing easier and more affordable with far-reaching features for your field devices and OEM equipment. 
+    Extend your system with data syncing and system management. Use unlimited tag and device connections to expand data collection, then see it with versatile visualization tools. 
+    Run scripts or interface with applications out at the edge, too. Its all possible with Ignition Edge. 
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: [amd64, arm64]
+    build-for: [amd64]
+  - build-on: [amd64, arm64]
+    build-for: [arm64]
+
+parts:
+    ignitionedge:
+        plugin: dump
+        source: ./app
+ 
+    configs:
+        source: ./configs
+        plugin: dump
+        organize:
+            'package-assets/*': package-assets/${CRAFT_PROJECT_NAME}/
+
+layout:
+    $SNAP/webserver/metro-keystore:
+        symlink: $SNAP_DATA/data/local/metro-keystore
+    $SNAP/webserver/csr.pfx:
+        symlink: $SNAP_DATA/data/local/csr.pfx
+    $SNAP/webserver/ssl.pfx:
+        symlink: $SNAP_DATA/data/local/ssl.pfx
+    $SNAP/lib/install-info.txt:
+        bind-file: $SNAP_DATA/lib/install-info.txt
+    $SNAP/data:
+        bind: $SNAP_DATA/data
+
+apps: 
+    ignitionedge:
+        command: ./ignition.sh
+        plugs:
+            - network
+            - network-bind
+            - network-status
+        daemon: simple
+        restart-condition: always
+        passthrough:
+            restart-delay: 30s    
+        environment:
+            LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/lib
+
+slots:
+    package-assets:
+        interface: content
+        content: package-assets
+        source:
+            read:
+                - $SNAP/package-assets/${CRAFT_PROJECT_NAME}
+
+lint:
+    ignore:
+        - library:
+            - lib/runtime/jre-nex/lib/libawt_headless.so
+            - lib/runtime/jre-nex/lib/libdt_socket.so
+            - lib/runtime/jre-nex/lib/libextnet.so
+            - lib/runtime/jre-nex/lib/libfontconfig.so.*
+            - lib/runtime/jre-nex/lib/libinstrument.so
+            - lib/runtime/jre-nex/lib/libj2*.so
+            - lib/runtime/jre-nex/lib/libjaas.so
+            - lib/runtime/jre-nex/lib/libjavajpeg.so
+            - lib/runtime/jre-nex/lib/libjawt.so
+            - lib/runtime/jre-nex/lib/libjdwp.so
+            - lib/runtime/jre-nex/lib/libjimage.so
+            - lib/runtime/jre-nex/lib/libjsig.so
+            - lib/runtime/jre-nex/lib/libjsound.so
+            - lib/runtime/jre-nex/lib/libjsvml.so
+            - lib/runtime/jre-nex/lib/liblcms.so
+            - lib/runtime/jre-nex/lib/libmanagement**.so
+            - lib/runtime/jre-nex/lib/libmlib_image.so
+            - lib/runtime/jre-nex/lib/libprefs.so
+            - lib/runtime/jre-nex/lib/librmi.so
+            - lib/runtime/jre-nex/lib/libsctp.so
+            - lib/runtime/jre-nex/lib/libsplashscreen.so
+            - lib/runtime/jre-nex/lib/libsyslookup.so
+            - lib/runtime/jre-nex/lib/libverify.so
+            - lib/runtime/jre-nex/lib/libzip.so
+
