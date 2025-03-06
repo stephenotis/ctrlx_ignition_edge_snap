@@ -1,7 +1,10 @@
 This unofficial repository is used to demonstrate how to compile the standard installer for Ignition Edge on linux into a snap format
 The Gateway launches on the CtrlX Core and can be accessed at http://localhost:8088
+
 Note: To reduce the size of the snap output, the Perspective Workstation, Designer Launcher and Vision Client Launcher contents have all been removed. Clicking those links in the Ignition Gateway will lead to a 404 error.
+
 Note: The current sidebar link to the Ignition Gateway is not functioning.
+
 Steps to snap Ignition Edge
 1. Download the linux x86 zipped installer for Ignition Edge and place in folder bin/ located at the project root.
 2. Make sure the filename matches the name in the snapcraft.yaml file for parts:ignitionedge
