@@ -1,4 +1,4 @@
-This unofficial repository is used to demonstrate how to compile the standard installer for Ignition Edge on linux into a snap format.
+This unofficial repository is used for testing to compile the standard installer for Ignition Edge on linux into a snap format.
 The Gateway launches on the CtrlX Core and can be accessed at http://localhost:8088
 
 Note: To reduce the size of the snap output, the Perspective Workstation, Designer Launcher and Vision Client Launcher contents have all been removed. Clicking those links in the Ignition Gateway will lead to a 404 error.
