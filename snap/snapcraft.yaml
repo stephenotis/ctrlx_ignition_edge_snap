@@ -15,12 +15,12 @@ confinement: strict
 
 architectures:
   - build-on: [amd64]
-    build-for: [arm64]
+    build-for: [amd64]
 
 parts:
     ignitionedge:
         plugin: dump
-        source: ./bin/Ignition-Edge-linux-aarch-64-8.1.45.zip
+        source: ./bin/Ignition-Edge-linux-x86-64-8.1.45.zip
         source-type: zip
         override-pull: |
             snapcraftctl pull
