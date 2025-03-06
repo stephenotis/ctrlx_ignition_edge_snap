@@ -1,0 +1,91 @@
+# Getting started
+# See https://snapcraft.io/docs/getting-started
+# Snapcraft references
+# See https://snapcraft.io/docs/snapcraft-yaml-reference
+name: ctrlx-ignition-edge
+version: "8.1.45"
+base: core22
+summary: Ignition Edge Gateway designed for ctrlX OS
+description: |
+    Ignition Edge® makes edge computing easier and more affordable with far-reaching features for your field devices and OEM equipment. 
+    Extend your system with data syncing and system management. Use unlimited tag and device connections to expand data collection, then see it with versatile visualization tools. 
+    Run scripts or interface with applications out at the edge, too. Its all possible with Ignition Edge. 
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: [amd64]
+    build-for: [arm64]
+
+parts:
+    ignitionedge:
+        plugin: dump
+        source: ./bin/Ignition-Edge-linux-aarch-64-8.1.45.zip
+        source-type: zip
+        override-pull: |
+            snapcraftctl pull
+            rm lib/core/launch/*.exe
+            rm lib/core/launch/*.dmg
+            rm lib/core/launch/*.gz
+            rm data/ignition.conf
+            rmdir temp
+            chmod a+x *.sh
+            chmod a+x ignition-gateway
+            tar -xzf lib/runtime/jre-nix.tar.gz
+            mv jre-nix lib/runtime/jre-nix
+        organize:
+            data: data_tmp/
+            logs: logs_tmp/
+
+    snapconfigs: 
+        after: 
+            - ignitionedge
+        plugin: dump
+        source: ./include
+        organize: 
+            "ignition.conf": "data_tmp/ignition.conf"
+ 
+    configs:
+        source: ./configs
+        plugin: dump
+        organize:
+            'package-assets/*': package-assets/${CRAFT_PROJECT_NAME}/
+
+layout:
+    $SNAP/webserver/metro-keystore:
+        symlink: $SNAP_DATA/data/local/metro-keystore
+    $SNAP/webserver/csr.pfx:
+        symlink: $SNAP_DATA/data/local/csr.pfx
+    $SNAP/webserver/ssl.pfx:
+        symlink: $SNAP_DATA/data/local/ssl.pfx
+    $SNAP/lib/install-info.txt:
+        bind-file: $SNAP_DATA/lib/install-info.txt
+    $SNAP/data:
+        symlink: $SNAP_DATA/data
+    $SNAP/temp:
+        symlink: $SNAP_DATA/temp
+    $SNAP/logs:
+        symlink: $SNAP_DATA/logs
+
+apps: 
+    ignitionedge:
+        command: ./ignition.sh
+        plugs:
+            - network
+            - network-bind
+            - network-status
+        daemon: simple
+        restart-condition: always
+        passthrough:
+            restart-delay: 30s    
+        environment:
+            LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/lib
+
+slots:
+    package-assets:
+        interface: content
+        content: package-assets
+        source:
+            read:
+                - $SNAP/package-assets/${CRAFT_PROJECT_NAME}
+
