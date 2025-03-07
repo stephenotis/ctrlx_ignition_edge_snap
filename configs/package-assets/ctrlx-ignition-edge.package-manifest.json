@@ -2,23 +2,13 @@
     "$schema": "https://json-schema.boschrexroth.com/ctrlx-automation/ctrlx-core/apps/package-manifest/package-manifest.v1.3.schema.json",
     "version": "1.0.0",
     "id": "ctrlx-ignition-edge",
-    "services": {
-      "proxyMapping": [
-        {
-          "name": "ctrlx-ignition-edge",
-          "url": "/ignition-edge",
-          "binding": ":8043",
-          "restricted": []
-        }
-      ]
-    },
     "menus": {
       "sidebar": [
         {
-          "id": "ctrlx-ignition-edge",
-          "target": "_blank",
+          "id": "ctrlx-ignition-gateway",
+          "target": "ctrlx-ignition-gateway",
           "title": "Ignition Gateway",
-          "link": "http://${localhost}:8088"
+          "link": "http://${hostname}:8088/"
         }
       ]
     }
