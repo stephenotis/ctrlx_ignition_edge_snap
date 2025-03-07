@@ -33,6 +33,7 @@ parts:
             chmod a+x ignition-gateway
             tar -xzf lib/runtime/jre-nix.tar.gz
             mv jre-nix lib/runtime/jre-nix
+            rm lib/runtime/*.gz            
         organize:
             data: data_tmp/
             logs: logs_tmp/
