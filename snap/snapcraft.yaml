@@ -3,9 +3,10 @@
 # Snapcraft references
 # See https://snapcraft.io/docs/snapcraft-yaml-reference
 name: ctrlx-ignition-edge
-version: "8.1.45"
+version: "8.1.45+dev"
 base: core22
 summary: Ignition Edge Gateway designed for ctrlX OS
+icon: snap/gui/logo.png
 description: |
     Ignition Edge® makes edge computing easier and more affordable with far-reaching features for your field devices and OEM equipment. 
     Extend your system with data syncing and system management. Use unlimited tag and device connections to expand data collection, then see it with versatile visualization tools. 
@@ -15,15 +16,19 @@ confinement: strict
 
 architectures:
   - build-on: [amd64]
+    build-for: [arm64]
+  - build-on: [amd64]
     build-for: [amd64]
 
 parts:
     ignitionedge:
         plugin: dump
-        source: ./bin/Ignition-Edge-linux-x86-64-8.1.45.zip
+        source: 
+            - on amd64 to arm64: ./bin/Ignition-Edge-linux-aarch-64-8.1.45.zip
+            - on amd64 to amd64: ./bin/Ignition-Edge-linux-x86-64-8.1.45.zip
         source-type: zip
         override-pull: |
-            snapcraftctl pull
+            craftctl default  
             rm lib/core/launch/*.exe
             rm lib/core/launch/*.dmg
             rm lib/core/launch/*.gz
@@ -31,18 +36,29 @@ parts:
             rmdir temp
             chmod a+x *.sh
             chmod a+x ignition-gateway
-            tar -xzf lib/runtime/jre-nix.tar.gz
-            mv jre-nix lib/runtime/jre-nix
-            rm lib/runtime/*.gz            
+            case $SNAPCRAFT_TARGET_ARCH in
+            amd64)
+                tar -xzf lib/runtime/jre-nix.tar.gz
+                mv jre-nix lib/runtime/jre-nix
+                ;;
+            arm64)
+                tar -xzf lib/runtime/jre-aarch64.tar.gz
+                mv jre-aarch64 lib/runtime/jre-aarch64
+                rm lib/runtime/*.gz
+                ;;
+            esac       
         organize:
             data: data_tmp/
             logs: logs_tmp/
+            user-lib: user-lib_tmp
 
     snapconfigs: 
         after: 
             - ignitionedge
         plugin: dump
-        source: ./include
+        source:
+            - on amd64 to amd64: ./include/amd64
+            - on amd64 to arm64: ./include/arm64        
         organize: 
             "ignition.conf": "data_tmp/ignition.conf"
  
@@ -67,6 +83,8 @@ layout:
         symlink: $SNAP_DATA/temp
     $SNAP/logs:
         symlink: $SNAP_DATA/logs
+    $SNAP/user-lib:
+        symlink: $SNAP_DATA/user-lib        
 
 apps: 
     ignitionedge:
@@ -75,6 +93,7 @@ apps:
             - network
             - network-bind
             - network-status
+            - removable-media
         daemon: simple
         restart-condition: always
         passthrough:
