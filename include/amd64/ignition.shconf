@@ -1,0 +1,2 @@
+PIDDIR="${SNAP_DATA}/"
+FIXED_COMMAND=console
