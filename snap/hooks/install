@@ -16,6 +16,9 @@ fi
 if [ ! -d $SNAP_DATA/temp ]; then
     mkdir $SNAP_DATA/temp
 fi
+if [ ! -d $SNAP_DATA/user-lib ]; then
+    cp -r $SNAP/user-lib_tmp $SNAP_DATA/user-lib
+fi
 
 #mkdir $SNAP_DATA/logs
 mkdir $SNAP_DATA/jre-tmp
