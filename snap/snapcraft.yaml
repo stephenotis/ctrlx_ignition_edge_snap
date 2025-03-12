@@ -39,14 +39,15 @@ parts:
             case $SNAPCRAFT_TARGET_ARCH in
             amd64)
                 tar -xzf lib/runtime/jre-nix.tar.gz
-                mv jre-nix lib/runtime/jre-nix
+                mv jre-nix lib/runtime/jre-nix               
                 ;;
             arm64)
                 tar -xzf lib/runtime/jre-aarch64.tar.gz
                 mv jre-aarch64 lib/runtime/jre-aarch64
-                rm lib/runtime/*.gz
                 ;;
-            esac       
+            esac    
+            rm lib/runtime/*.gz
+
         organize:
             data: data_tmp/
             logs: logs_tmp/
@@ -56,9 +57,21 @@ parts:
         after: 
             - ignitionedge
         plugin: dump
-        source:
-            - on amd64 to amd64: ./include/amd64
-            - on amd64 to arm64: ./include/arm64        
+        source: ./include
+        override-pull: |
+            craftctl default
+            case $SNAPCRAFT_TARGET_ARCH in
+            amd64)
+                cp amd64/ignition.conf ignition.conf          
+                ;;
+            arm64)
+                cp arm64/ignition.conf ignition.conf
+                ;;
+            esac    
+            rm amd64/*
+            rm arm64/*
+            rmdir amd64
+            rmdir arm64
         organize: 
             "ignition.conf": "data_tmp/ignition.conf"
  
@@ -84,11 +97,11 @@ layout:
     $SNAP/logs:
         symlink: $SNAP_DATA/logs
     $SNAP/user-lib:
-        symlink: $SNAP_DATA/user-lib        
+        symlink: $SNAP_DATA/user-lib
 
 apps: 
     ignitionedge:
-        command: ./ignition.sh
+        command: ./ignition-entrypoint.sh
         plugs:
             - network
             - network-bind
@@ -108,4 +121,19 @@ slots:
         source:
             read:
                 - $SNAP/package-assets/${CRAFT_PROJECT_NAME}
+
+plugs:
+    active-solution:
+        interface: content
+        content: solutions
+        target: $SNAP_COMMON/solutions
+
+lint:
+    ignore:
+        - library:
+            - lib/runtime/*
+            - lib/*
+            - lib/core/gateway/*
+            - ignition-gateway
+
 
