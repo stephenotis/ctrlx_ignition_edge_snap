@@ -5,11 +5,22 @@
     "menus": {
       "sidebar": [
         {
-          "id": "ctrlx-ignition-gateway",
-          "target": "ctrlx-ignition-gateway",
+          "id": "ctrl-ignition-edge",
           "title": "Ignition Gateway",
-          "link": "http://${hostname}:8088/"
+          "target": "ctrls-ignition-gateway",
+          "icon": "bosch-ic-molecule-gas",
+          "link": "http://${hostname}:8088/"          
         }
       ]
-    }
+    },
+    "configuration": {
+      "appDirectories": [
+        {
+        "name": "ignition",
+        "description": "Ignition Edge gateway configuration",
+        "icon": "bosch-ic-components",
+        "copyOnLoad": true
+        }
+      ]
+   }
 }
