@@ -8,8 +8,8 @@ Steps to snap Ignition Edge
 2. Make sure the filename matches the name in the snapcraft.yaml file for parts:ignitionedge
 
    Example: For Ignition release 8.1.45, adjust the filenames below within the snapcraft.yaml file to match the :
-   
-   <code>parts:
+   '''yaml
+   parts:
             ignitionedge:
             plugin: dump
             source: 
@@ -17,7 +17,7 @@ Steps to snap Ignition Edge
                 - on amd64 to amd64: ./bin/Ignition-Edge-linux-x86-64-8.1.45.zip
             source-type: zip
             ...
-   </code> 
+   ''' 
 3. Adjust the revision number to match the Ignition Edge version
 
    <code>name: ctrlx-ignition-edge
