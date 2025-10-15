@@ -1,6 +1,7 @@
 # .gitignore
 
 *.gz
+*.zip
 parts
 prime
 publish

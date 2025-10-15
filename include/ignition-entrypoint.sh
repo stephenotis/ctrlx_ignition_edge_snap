@@ -10,8 +10,8 @@ done
 #set appdata directory
 if [ ! -d $SNAP_COMMON/solutions/activeConfiguration/ignition ]; then
     mkdir $SNAP_COMMON/solutions/activeConfiguration/ignition
-    cp $SNAP_DATA/data/ignition.conf $SNAP_COMMON/solutions/activeConfiguration/ignition
 fi
+cp $SNAP_DATA/data/ignition.conf $SNAP_COMMON/solutions/activeConfiguration/ignition
 
 #execute the ignition script
 echo "Ignition Entrypoint complete, now running main script"

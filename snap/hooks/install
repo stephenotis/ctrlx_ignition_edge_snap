@@ -23,7 +23,7 @@ fi
 #mkdir $SNAP_DATA/logs
 mkdir $SNAP_DATA/jre-tmp
 
-#preload data directory
+#preload data directory and configure gateway.xml
 cp -r $SNAP/data_tmp/. $SNAP_DATA/data
 cp $SNAP/data_tmp/gateway.xml_clean $SNAP_DATA/data/gateway.xml
 mkdir $SNAP_DATA/data/local
