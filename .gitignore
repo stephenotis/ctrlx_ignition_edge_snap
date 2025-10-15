@@ -1,0 +1,11 @@
+# .gitignore
+
+*.gz
+parts
+prime
+publish
+stage
+*.snap
+*venv
+.editorconfig/
+.vscode/
