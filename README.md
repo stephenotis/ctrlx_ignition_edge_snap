@@ -29,4 +29,4 @@ Steps to snap Ignition Edge
 5. Execute the build snap script for the version you would like built (amd64 or arm64)
 
 NOTE:
-Assumes app build environment is setup for developing snaps for ctrlX Automation apps. Must have Snapcraft installed.
+Assumes app build environment is setup for developing snaps for ctrlX Automation apps. Must have Snapcraft installed. You can check the [CtrlX Automation SDK help file](https://boschrexroth.github.io/ctrlx-automation-sdk/latest/) for more information on this.
