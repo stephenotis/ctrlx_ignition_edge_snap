@@ -1,4 +1,3 @@
 PIDDIR="${SNAP_DATA}/"
-WRAPPER_CONF="${SNAP_COMMON}/solutions/activeConfiguration/ignition/ignition.conf"
-FIXED_COMMAND=console
+WRAPPER_CONF="${SNAP_DATA}/data/ignition.conf"
 PASS_THROUGH=true

@@ -7,7 +7,7 @@
         {
           "id": "ctrl-ignition-edge",
           "title": "Ignition Gateway",
-          "target": "ctrls-ignition-gateway",
+          "target": "ctrlx-ignition-gateway",
           "icon": "bosch-ic-molecule-gas",
           "link": "http://${hostname}:8088/"          
         }
@@ -19,7 +19,8 @@
         "name": "ignition",
         "description": "Ignition Edge gateway configuration",
         "icon": "bosch-ic-components",
-        "copyOnLoad": true
+        "copyOnLoad": true,
+        "writeProtected": false
         }
       ]
    }

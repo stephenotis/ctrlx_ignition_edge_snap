@@ -107,6 +107,7 @@ apps:
             - network-bind
             - network-status
             - removable-media
+            - active-solution
         daemon: simple
         restart-condition: always
         passthrough:
