@@ -3,7 +3,7 @@
 # Snapcraft references
 # See https://snapcraft.io/docs/snapcraft-yaml-reference
 name: ctrlx-ignition-edge
-version: "3.6.0+8.3.0-dev"
+version: "8.3.0-rc1"
 base: core22
 summary: Ignition Edge Gateway designed for ctrlX OS
 icon: snap/gui/logo.png
