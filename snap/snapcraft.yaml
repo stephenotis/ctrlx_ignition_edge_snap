@@ -4,7 +4,7 @@
 # See https://snapcraft.io/docs/snapcraft-yaml-reference
 name: ctrlx-ignition-edge
 version: "8.3.7-rc1"
-base: core22
+base: core24
 summary: Ignition Edge Gateway designed for ctrlX OS
 icon: snap/gui/logo.png
 description: |
@@ -14,10 +14,12 @@ description: |
 grade: stable
 confinement: strict
 
-architectures:
-  - build-on: [amd64]
+platforms:
+  arm64:
+    build-on: [amd64]
     build-for: [arm64]
-  - build-on: [amd64]
+  amd64:
+    build-on: [amd64]
     build-for: [amd64]
 
 parts:
@@ -36,7 +38,7 @@ parts:
             rmdir temp
             chmod a+x *.sh
             chmod a+x ignition-gateway
-            case $SNAPCRAFT_TARGET_ARCH in
+            case $CRAFT_ARCH_BUILD_FOR in
             amd64)
                 tar -xzf lib/runtime/jre-nix.tar.gz
                 mv jre-nix lib/runtime/jre-nix               
@@ -60,7 +62,7 @@ parts:
         source: ./include
         override-pull: |
             craftctl default
-            case $SNAPCRAFT_TARGET_ARCH in
+            case $CRAFT_ARCH_BUILD_FOR in
             amd64)
                 cp amd64/ignition.conf ignition.conf          
                 ;;
@@ -110,8 +112,7 @@ apps:
             - active-solution
         daemon: simple
         restart-condition: always
-        passthrough:
-            restart-delay: 30s    
+        restart-delay: 30s
         environment:
             LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/lib
 
