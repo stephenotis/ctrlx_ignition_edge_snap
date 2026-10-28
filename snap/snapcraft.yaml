@@ -108,6 +108,7 @@ apps:
             - network-status
             - removable-media
             - active-solution
+            - datalayer
         daemon: simple
         restart-condition: always
         passthrough:
@@ -128,6 +129,12 @@ plugs:
         interface: content
         content: solutions
         target: $SNAP_COMMON/solutions
+    # Access to the ctrlX Data Layer from inside the snap (e.g. for Ignition modules using Bosch Rexroth's
+    # Data Layer client), declared as in the ctrlX AUTOMATION SDK samples.
+    datalayer:
+        interface: content
+        content: datalayer
+        target: $SNAP_DATA/.datalayer
 
 lint:
     ignore:
