@@ -6,10 +6,24 @@
       "sidebar": [
         {
           "id": "ctrl-ignition-edge",
-          "title": "Ignition Gateway",
-          "target": "ctrlx-ignition-gateway",
+          "title": "Ignition Edge",
           "icon": "bosch-ic-molecule-gas",
-          "link": "http://${hostname}:8088/"          
+          "items": [
+            {
+              "id": "ctrlx-ignition-edge-gateway",
+              "title": "Gateway",
+              "target": "ctrlx-ignition-gateway",
+              "link": "http://${hostname}:9088/",
+              "items": []
+            },
+            {
+              "id": "ctrlx-ignition-edge-vision",
+              "title": "Vision Client Launch",
+              "target": "_blank",
+              "link": "http://${hostname}:9088/app/home/vision/client-launcher",
+              "items": []
+            }
+          ]         
         }
       ]
     },
