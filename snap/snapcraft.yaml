@@ -55,6 +55,14 @@ parts:
             logs: logs_tmp/
             user-lib: user-lib_tmp
 
+    java21:
+        # Ignition bundles Java 17, but some modules need Java 21 or newer (for example
+        # ones using Bosch Rexroth's ctrlX Data Layer client library for Java). Ignition's
+        # own runtime stays in the snap: its start script checks for it on every start.
+        plugin: nil
+        stage-packages:
+            - openjdk-21-jre-headless
+
     snapconfigs: 
         after: 
             - ignitionedge
