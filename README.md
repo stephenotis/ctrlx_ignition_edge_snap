@@ -1,30 +1,34 @@
-This unofficial repository is used for testing to compile the standard installer for Ignition Edge on linux into a snap format.
-The Gateway launches on the CtrlX Core and can be accessed from the sidebar icon, or from port 8088. The package manifest file creates the sidebar menu icon linking to it.
+# Ignition Edge on ctrlX OS
 
-Steps to snap Ignition Edge
-1. Download the linux x86 and aarch64 zipped installer for Ignition Edge and place in folder bin/ located at the project root.
-2. Make sure the filename matches the name in the snapcraft.yaml file for parts:ignitionedge
+This repository packages the Ignition Edge Gateway as a snap for ctrlX OS. The
+current build uses Ignition Edge **8.3.10** and produces snap version
+`4.6.0+8.3.10`.
 
-   Example: For Ignition release 8.1.45, adjust the filenames below within the snapcraft.yaml file to match:
-   
-```yaml
-   parts:
-         ignitionedge:
-         plugin: dump
-         source: 
-             - on amd64 to arm64: ./bin/Ignition-Edge-linux-aarch-64-8.1.45.zip
-             - on amd64 to amd64: ./bin/Ignition-Edge-linux-x86-64-8.1.45.zip
-         source-type: zip
-         ...
-``` 
-4. Adjust the revision number to match the Ignition Edge version
+The Gateway starts as a service on the ctrlX Core. You can open it from the
+sidebar icon or at port `9088`. The package manifest adds the sidebar icon and
+links it to the Gateway.
 
-```yaml
-   name: ctrlx-ignition-edge
-   version: "8.1.45+dev"
-```
+## Build
 
-5. Execute the build snap script for the version you would like built (amd64 or arm64)
+1. Download the Ignition Edge 8.3.10 Linux zip installers for both supported
+   architectures and put them in the repository's `bin/` directory:
+   - `Ignition-Edge-linux-x86-64-8.3.10.zip` for amd64
+   - `Ignition-Edge-linux-aarch-64-8.3.10.zip` for arm64
+2. From the repository root, run the build script for the target architecture:
+   ```sh
+   ./build_snap_amd64.sh
+   ```
+   or
+   ```sh
+   ./build_snap_arm64.sh
+   ```
 
-NOTE:
-Assumes app build environment is setup for developing snaps for ctrlX Automation apps. Must have Snapcraft installed. You can check the [CtrlX Automation SDK help file](https://boschrexroth.github.io/ctrlx-automation-sdk/latest/) for more information on this.
+The installer archives are not included in this repository. The snap sources,
+version, and supported architectures are configured in
+[`snap/snapcraft.yaml`](snap/snapcraft.yaml).
+
+## Requirements
+
+Snapcraft and the ctrlX Automation app build environment must be installed and
+configured. See the [ctrlX Automation SDK documentation](https://boschrexroth.github.io/ctrlx-automation-sdk/latest/)
+for setup information.
