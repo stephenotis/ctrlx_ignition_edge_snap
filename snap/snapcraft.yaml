@@ -3,7 +3,8 @@
 # Snapcraft references
 # See https://snapcraft.io/docs/snapcraft-yaml-reference
 name: ctrlx-ignition-edge
-version: "8.3.7-rc1"
+title: Ignition Edge on CtrlX OS
+version: "4.6.0+8.3.10"
 base: core24
 summary: Ignition Edge Gateway designed for ctrlX OS
 icon: snap/gui/logo.png
@@ -26,8 +27,8 @@ parts:
     ignitionedge:
         plugin: dump
         source: 
-            - on amd64 to arm64: ./bin/Ignition-Edge-linux-aarch-64-8.3.7.zip
-            - on amd64 to amd64: ./bin/Ignition-Edge-linux-x86-64-8.3.7.zip
+            - on amd64 to arm64: ./bin/Ignition-Edge-linux-aarch-64-8.3.10.zip
+            - on amd64 to amd64: ./bin/Ignition-Edge-linux-x86-64-8.3.10.zip
         source-type: zip
         override-pull: |
             craftctl default  
